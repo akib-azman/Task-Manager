@@ -1,4 +1,4 @@
-# Manager of Tasks
+# Task-Manager
 
 HTML, CSS, and JavaScript were used to create this straightforward task management online application. With persistent storage, this project allows task creation, management, and organization right within the browser.
 

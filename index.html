@@ -42,7 +42,7 @@
     padding: 2rem 1rem 4rem;
   }
  
-  /* ── HEADER ── */
+
   header {
     width: 100%;
     max-width: 720px;
@@ -69,7 +69,6 @@
   }
   #current-date { color: var(--text2); font-weight: 500; }
  
-  /* ── STATS BAR ── */
   .stats {
     width: 100%;
     max-width: 720px;
@@ -102,7 +101,6 @@
   .stat-value.active { color: var(--accent); }
   .stat-value.high   { color: var(--red); }
  
-  /* ── INPUT AREA ── */
   .input-section {
     width: 100%;
     max-width: 720px;
@@ -185,7 +183,6 @@
   }
   .due-input:focus { border-color: var(--accent); }
  
-  /* ── FILTER & SEARCH ── */
   .controls {
     width: 100%;
     max-width: 720px;
@@ -261,7 +258,6 @@
     -webkit-appearance: none;
   }
  
-  /* ── TASK LIST ── */
   .task-list {
     width: 100%;
     max-width: 720px;
@@ -390,7 +386,6 @@
   .action-btn:hover { background: var(--surface2); color: var(--text); }
   .action-btn.del:hover { background: var(--red-soft); color: #ff5580; border-color: transparent; }
  
-  /* ── EMPTY STATE ── */
   .empty-state {
     width: 100%;
     max-width: 720px;
@@ -402,7 +397,6 @@
   .empty-state h3 { font-family: 'Syne', sans-serif; font-weight: 600; color: var(--text2); margin-bottom: 0.4rem; }
   .empty-state p  { font-size: 0.875rem; }
  
-  /* ── BULK ACTIONS ── */
   .bulk-bar {
     width: 100%;
     max-width: 720px;
@@ -425,7 +419,6 @@
   .btn-ghost:hover { background: var(--surface2); color: var(--text); }
   .btn-ghost.danger:hover { background: var(--red-soft); color: #ff5580; border-color: transparent; }
  
-  /* ── PROGRESS BAR ── */
   .progress-wrap {
     width: 100%;
     max-width: 720px;
@@ -451,7 +444,6 @@
     justify-content: space-between;
   }
  
-  /* ── EDIT MODE ── */
   .edit-input {
     width: 100%;
     background: var(--surface2);
@@ -465,7 +457,6 @@
     margin-bottom: 0.3rem;
   }
  
-  /* ── TOAST ── */
   #toast {
     position: fixed;
     bottom: 2rem;
@@ -488,7 +479,6 @@
     transform: translateX(-50%) translateY(0);
   }
  
-  /* ── CATEGORY LEGEND ── */
   .cat-row {
     width: 100%;
     max-width: 720px;
@@ -513,7 +503,6 @@
 </head>
 <body>
  
-<!-- HEADER -->
 <header>
   <div class="logo">Task<span>Flow</span></div>
   <div class="header-meta">
@@ -522,7 +511,6 @@
   </div>
 </header>
  
-<!-- STATS -->
 <div class="stats">
   <div class="stat-card">
     <div class="stat-label">Total</div>
@@ -542,7 +530,6 @@
   </div>
 </div>
  
-<!-- PROGRESS -->
 <div class="progress-wrap">
   <div class="progress-label">
     <span>Overall Progress</span>
@@ -553,7 +540,6 @@
   </div>
 </div>
  
-<!-- INPUT -->
 <div class="input-section">
   <div class="input-row">
     <input class="task-input" id="task-input" type="text" placeholder="What needs to be done?" />
@@ -577,7 +563,6 @@
   </div>
 </div>
  
-<!-- CONTROLS -->
 <div class="controls">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
@@ -597,19 +582,16 @@
   </select>
 </div>
  
-<!-- CATEGORY FILTER -->
 <div class="cat-row" id="cat-row"></div>
  
-<!-- BULK ACTIONS -->
+
 <div class="bulk-bar">
   <button class="btn-ghost" onclick="markAllDone()">✓ Complete all</button>
   <button class="btn-ghost danger" onclick="clearDone()">✕ Clear completed</button>
 </div>
  
-<!-- TASK LIST -->
 <div class="task-list" id="task-list"></div>
  
-<!-- TOAST -->
 <div id="toast"></div>
  
 <script>
@@ -727,14 +709,13 @@ function render() {
   const search  = document.getElementById('search-input').value.toLowerCase();
   const sortBy  = document.getElementById('sort-select').value;
  
-  // categories
+
   const allCats = ['All', ...new Set(tasks.map(t => t.category))];
   const catRow = document.getElementById('cat-row');
   catRow.innerHTML = allCats.map(c =>
     `<button class="cat-chip ${c === activeCat ? 'active' : ''}" onclick="setCat('${c}')">${c}</button>`
   ).join('');
  
-  // filter
   let list = tasks.filter(t => {
     if (filter === 'active' && t.done) return false;
     if (filter === 'done'   && !t.done) return false;
@@ -743,7 +724,6 @@ function render() {
     return true;
   });
  
-  // sort
   if (sortBy === 'oldest')  list.sort((a,b) => a.created - b.created);
   else if (sortBy === 'priority') list.sort((a,b) => PRIO[b.priority] - PRIO[a.priority]);
   else if (sortBy === 'due') list.sort((a,b) => {
@@ -755,7 +735,6 @@ function render() {
   else if (sortBy === 'alpha') list.sort((a,b) => a.name.localeCompare(b.name));
   else list.sort((a,b) => b.created - a.created);
  
-  // stats
   const total  = tasks.length;
   const done   = tasks.filter(t => t.done).length;
   const active = total - done;
@@ -768,7 +747,6 @@ function render() {
   document.getElementById('progress-pct').textContent = pct + '%';
   document.getElementById('progress-fill').style.width = pct + '%';
  
-  // render list
   const container = document.getElementById('task-list');
   if (!list.length) {
     container.innerHTML = `
@@ -814,7 +792,6 @@ function escHtml(s) {
   return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
  
-// Date / greeting
 function initMeta() {
   const now = new Date();
   document.getElementById('current-date').textContent = now.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long' });
@@ -822,7 +799,6 @@ function initMeta() {
   document.getElementById('greeting').textContent = h < 12 ? 'Good morning' : h < 18 ? 'Good afternoon' : 'Good evening';
 }
  
-// Keyboard shortcut: Enter to add
 document.getElementById('task-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') addTask();
 });

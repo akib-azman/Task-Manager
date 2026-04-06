@@ -7,7 +7,7 @@ HTML, CSS, and JavaScript were used to create this straightforward task manageme
 Include a title, description, category, and deadline for each new task.
 Modify and remove current tasks
 Mark assignments as finished.
-Sort jobs according to their status (All, Completed, Pending).
+Sort tasks according to their status (All, Completed, Pending).
 Sort assignments according to their due dates.
 Organization based on categories
 Support for local storage
